@@ -67,60 +67,60 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* Base everything on the dark theme since it's a dark UI app */
-:root, .dark {
-  --button-outline: rgba(255,255,255, .10);
-  --badge-outline: rgba(255,255,255, .05);
+/* Light mode */
+:root {
+  --button-outline: rgba(0,0,0, .10);
+  --badge-outline: rgba(0,0,0, .06);
   --opaque-button-border-intensity: 9;
-  --elevate-1: rgba(255,255,255, .04);
-  --elevate-2: rgba(255,255,255, .09);
+  --elevate-1: rgba(0,0,0, .03);
+  --elevate-2: rgba(0,0,0, .06);
 
-  /* Deep Navy / Charcoal Base */
-  --background: 224 49% 8%; /* #0a0f1d */
-  --foreground: 45 30% 95%; /* #fdfbf7 warm off-white */
-  
-  --border: 224 20% 20%;
-  --input: 224 20% 15%;
-  --ring: 44 80% 55%; /* Saffron Gold */
-  
-  --card: 224 40% 11%;
-  --card-foreground: 45 30% 95%;
-  --card-border: 224 30% 18%;
-  
-  --popover: 224 40% 11%;
-  --popover-foreground: 45 30% 95%;
-  --popover-border: 224 30% 18%;
-  
-  /* Saffron Gold */
-  --primary: 44 80% 55%; 
-  --primary-foreground: 224 49% 8%;
-  
-  --secondary: 224 30% 16%;
-  --secondary-foreground: 45 30% 95%;
-  
-  --muted: 224 20% 16%;
-  --muted-foreground: 45 10% 70%;
-  
-  --accent: 44 80% 55%;
-  --accent-foreground: 224 49% 8%;
-  
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 45 30% 95%;
+  /* Clean white/light base */
+  --background: 40 30% 97%;      /* warm white #f9f7f4 */
+  --foreground: 224 30% 12%;     /* near-black */
 
-  --chart-1: 44 80% 55%;
-  --chart-2: 224 40% 40%;
+  --border: 220 15% 88%;
+  --input: 220 15% 92%;
+  --ring: 38 90% 45%;            /* deeper gold for focus rings */
+
+  --card: 0 0% 100%;
+  --card-foreground: 224 30% 12%;
+  --card-border: 220 15% 90%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 224 30% 12%;
+  --popover-border: 220 15% 88%;
+
+  /* Saffron Gold — slightly deeper for contrast on white */
+  --primary: 38 90% 45%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 220 15% 93%;
+  --secondary-foreground: 224 30% 20%;
+
+  --muted: 220 15% 94%;
+  --muted-foreground: 220 10% 46%;
+
+  --accent: 38 90% 45%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+
+  --chart-1: 38 90% 45%;
+  --chart-2: 224 40% 50%;
   --chart-3: 20 80% 50%;
-  --chart-4: 160 60% 45%;
-  --chart-5: 280 65% 60%;
+  --chart-4: 160 60% 40%;
+  --chart-5: 280 65% 55%;
 
-  --sidebar: 224 40% 11%;
-  --sidebar-foreground: 45 30% 95%;
-  --sidebar-border: 224 30% 18%;
-  --sidebar-primary: 44 80% 55%;
-  --sidebar-primary-foreground: 224 49% 8%;
-  --sidebar-accent: 224 30% 16%;
-  --sidebar-accent-foreground: 45 30% 95%;
-  --sidebar-ring: 44 80% 55%;
+  --sidebar: 0 0% 100%;
+  --sidebar-foreground: 224 30% 12%;
+  --sidebar-border: 220 15% 88%;
+  --sidebar-primary: 38 90% 45%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 220 15% 93%;
+  --sidebar-accent-foreground: 224 30% 12%;
+  --sidebar-ring: 38 90% 45%;
 
   --app-font-sans: 'Plus Jakarta Sans', sans-serif;
   --app-font-serif: 'Playfair Display', serif;
@@ -135,29 +135,29 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
-    /* Force dark mode background visually if needed, though variable does it */
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif tracking-tight text-primary;
+    @apply font-serif tracking-tight;
+    color: hsl(var(--foreground));
   }
 }
 
 /* Glassmorphism utilities */
 .glass {
-  @apply bg-background/60 backdrop-blur-md border border-white/10;
+  @apply bg-white/70 backdrop-blur-md border border-black/10;
 }
 
 .gold-gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-600;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-400;
 }
 
 .gold-glow {
-  box-shadow: 0 0 20px -5px rgba(234, 179, 8, 0.3);
+  box-shadow: 0 0 20px -5px rgba(202, 138, 4, 0.35);
 }
 
 .gold-glow:hover {
-  box-shadow: 0 0 30px -5px rgba(234, 179, 8, 0.5);
+  box-shadow: 0 0 32px -5px rgba(202, 138, 4, 0.55);
 }
 
 @layer utilities {
