@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Vyakti Parichay"
+version = "1.0.0"
+id = "artifacts/vyakti-parichay"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22935
+
+[services.development]
+run = "pnpm --filter @workspace/vyakti-parichay run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/vyakti-parichay", "run", "build" ]
+publicDir = "artifacts/vyakti-parichay/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22935"
+BASE_PATH = "/"

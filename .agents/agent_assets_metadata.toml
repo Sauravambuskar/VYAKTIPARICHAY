@@ -1,0 +1,26 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "omRFKzIrSNqTO0uJfjaJv"
+uri = "file://artifacts/vyakti-parichay/public/images/hero-bg.png"
+type = "image"
+title = "Prestigious awards ceremony background"
+
+[[generated]]
+id = "LBNwwq8FKqqePZPcU3H9y"
+uri = "file://artifacts/vyakti-parichay/public/images/avatar-1.png"
+type = "image"
+title = "Indian male professional portrait"
+
+[[generated]]
+id = "jpTrCie-NyTtufgRRr07p"
+uri = "file://artifacts/vyakti-parichay/public/images/avatar-2.png"
+type = "image"
+title = "Indian female professional portrait"
+
+[[generated]]
+id = "kWb-5bWsXrcKQ97BudgSR"
+uri = "file://artifacts/vyakti-parichay/public/images/avatar-3.png"
+type = "image"
+title = "Indian male artist portrait"

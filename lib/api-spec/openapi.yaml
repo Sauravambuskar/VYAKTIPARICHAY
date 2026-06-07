@@ -3,13 +3,17 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Vyakti Parichay API specification
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: profiles
+    description: Profile operations
+  - name: contact
+    description: Contact form operations
 paths:
   /healthz:
     get:
@@ -24,6 +28,199 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /profiles:
+    get:
+      operationId: listProfiles
+      tags: [profiles]
+      summary: List profiles
+      description: Returns a paginated list of profiles, optionally filtered by category or search query
+      parameters:
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: featured
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of profiles
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfileList"
+    post:
+      operationId: createProfile
+      tags: [profiles]
+      summary: Submit a new profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfileInput"
+      responses:
+        "201":
+          description: Profile created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+        "400":
+          description: Validation error
+
+  /profiles/featured:
+    get:
+      operationId: getFeaturedProfiles
+      tags: [profiles]
+      summary: Get featured profiles
+      description: Returns a curated list of featured profiles for the homepage
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Featured profiles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Profile"
+
+  /profiles/stats:
+    get:
+      operationId: getProfileStats
+      tags: [profiles]
+      summary: Get platform statistics
+      description: Returns total profiles count, categories breakdown, and other platform stats
+      responses:
+        "200":
+          description: Platform statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlatformStats"
+
+  /profiles/categories:
+    get:
+      operationId: listCategories
+      tags: [profiles]
+      summary: List available categories with counts
+      responses:
+        "200":
+          description: Categories with profile counts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CategoryCount"
+
+  /profiles/{id}:
+    get:
+      operationId: getProfile
+      tags: [profiles]
+      summary: Get a profile by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Profile details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+        "404":
+          description: Profile not found
+    patch:
+      operationId: updateProfile
+      tags: [profiles]
+      summary: Update a profile
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfileUpdate"
+      responses:
+        "200":
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+        "404":
+          description: Profile not found
+    delete:
+      operationId: deleteProfile
+      tags: [profiles]
+      summary: Delete a profile
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted successfully
+        "404":
+          description: Profile not found
+
+  /contact:
+    post:
+      operationId: submitContact
+      tags: [contact]
+      summary: Submit a contact message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactInput"
+      responses:
+        "201":
+          description: Message submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactMessage"
+        "400":
+          description: Validation error
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +231,268 @@ components:
       required:
         - status
 
+    Profile:
+      type: object
+      required:
+        - id
+        - name
+        - category
+        - tagline
+        - createdAt
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        category:
+          type: string
+        tagline:
+          type: string
+        bio:
+          type: ["string", "null"]
+        location:
+          type: ["string", "null"]
+        phone:
+          type: ["string", "null"]
+        email:
+          type: ["string", "null"]
+        website:
+          type: ["string", "null"]
+        avatarUrl:
+          type: ["string", "null"]
+        coverImageUrl:
+          type: ["string", "null"]
+        achievements:
+          type: array
+          items:
+            type: string
+        awards:
+          type: array
+          items:
+            type: string
+        galleryUrls:
+          type: array
+          items:
+            type: string
+        socialLinks:
+          $ref: "#/components/schemas/SocialLinks"
+        featured:
+          type: boolean
+        verified:
+          type: boolean
+        yearsOfExperience:
+          type: ["integer", "null"]
+        organization:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: ["string", "null"]
+          format: date-time
+
+    SocialLinks:
+      type: object
+      properties:
+        linkedin:
+          type: ["string", "null"]
+        twitter:
+          type: ["string", "null"]
+        instagram:
+          type: ["string", "null"]
+        facebook:
+          type: ["string", "null"]
+        youtube:
+          type: ["string", "null"]
+
+    ProfileInput:
+      type: object
+      required:
+        - name
+        - category
+        - tagline
+      properties:
+        name:
+          type: string
+          minLength: 2
+        category:
+          type: string
+        tagline:
+          type: string
+          minLength: 5
+        bio:
+          type: string
+        location:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+          format: email
+        website:
+          type: string
+        avatarUrl:
+          type: string
+        coverImageUrl:
+          type: string
+        achievements:
+          type: array
+          items:
+            type: string
+        awards:
+          type: array
+          items:
+            type: string
+        galleryUrls:
+          type: array
+          items:
+            type: string
+        socialLinks:
+          $ref: "#/components/schemas/SocialLinks"
+        yearsOfExperience:
+          type: integer
+        organization:
+          type: string
+
+    ProfileUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        tagline:
+          type: string
+        bio:
+          type: string
+        location:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        website:
+          type: string
+        avatarUrl:
+          type: string
+        coverImageUrl:
+          type: string
+        achievements:
+          type: array
+          items:
+            type: string
+        awards:
+          type: array
+          items:
+            type: string
+        galleryUrls:
+          type: array
+          items:
+            type: string
+        socialLinks:
+          $ref: "#/components/schemas/SocialLinks"
+        featured:
+          type: boolean
+        verified:
+          type: boolean
+        yearsOfExperience:
+          type: integer
+        organization:
+          type: string
+
+    ProfileList:
+      type: object
+      required:
+        - profiles
+        - total
+        - page
+        - limit
+      properties:
+        profiles:
+          type: array
+          items:
+            $ref: "#/components/schemas/Profile"
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+
+    PlatformStats:
+      type: object
+      required:
+        - totalProfiles
+        - featuredProfiles
+        - categoriesCount
+        - verifiedProfiles
+      properties:
+        totalProfiles:
+          type: integer
+        featuredProfiles:
+          type: integer
+        categoriesCount:
+          type: integer
+        verifiedProfiles:
+          type: integer
+        categoryBreakdown:
+          type: array
+          items:
+            $ref: "#/components/schemas/CategoryCount"
+
+    CategoryCount:
+      type: object
+      required:
+        - category
+        - count
+      properties:
+        category:
+          type: string
+        count:
+          type: integer
+
+    ContactInput:
+      type: object
+      required:
+        - name
+        - email
+        - message
+      properties:
+        name:
+          type: string
+          minLength: 2
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        subject:
+          type: string
+        message:
+          type: string
+          minLength: 10
+
+    ContactMessage:
+      type: object
+      required:
+        - id
+        - name
+        - email
+        - message
+        - createdAt
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: ["string", "null"]
+        subject:
+          type: ["string", "null"]
+        message:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
