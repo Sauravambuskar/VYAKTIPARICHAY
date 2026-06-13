@@ -2,6 +2,17 @@
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 28s linear infinite;
+  /* duplicate content in HTML to create seamless loop */
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
