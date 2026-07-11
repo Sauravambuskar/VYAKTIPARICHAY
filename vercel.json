@@ -1,7 +1,7 @@
 {
   "installCommand": "pnpm install --frozen-lockfile=false",
-  "buildCommand": "pnpm --filter @workspace/vyakti-parichay run build",
-  "outputDirectory": "artifacts/vyakti-parichay/dist",
+  "buildCommand": "pnpm --filter @workspace/vyakti-parichay run build && cp -r artifacts/vyakti-parichay/dist ./dist",
+  "outputDirectory": "dist",
   "framework": null,
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
