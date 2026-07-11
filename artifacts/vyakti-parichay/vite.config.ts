@@ -37,11 +37,7 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname),
   build: {
-    // On Replit output stays inside the artifact; on Vercel write to repo-root
-    // /dist so Vercel's outputDirectory: "dist" resolves correctly.
-    outDir: isReplit
-      ? path.resolve(import.meta.dirname, "dist")
-      : path.resolve(import.meta.dirname, "../../dist"),
+    outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
   },
   server: {
